@@ -309,11 +309,6 @@ Ecommerce_SQL_Analytics/
 ├── docs/
 │   └── data_dictionary.md
 │
-├── tests/
-│   └── test_pipeline.py
-│
-├── powerbi/
-│   └── ecommerce_analytics.pbix
 │
 ├── .env
 ├── .gitignore
