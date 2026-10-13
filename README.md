@@ -506,9 +506,17 @@ Ecommerce_SQL_Analytics/
 │   ├── inspect.sql
 │   ├── transformation.sql
 │   └── analytics.sql
+│
+├── docs/
+│   └── data_dictionary.md
+│
 ├── tests/
 │   └── test_pipeline.py
-├── .env.example
+│
+├── powerbi/
+│   └── ecommerce_analytics.pbix
+│
+├── .env
 ├── .gitignore
 └── README.md
 ```
@@ -658,8 +666,4 @@ The project demonstrates practical SQL skills while documenting the limitations 
 
 B.Tech — Computer Science and Engineering
 
-**Technical Skills:** Python · SQL · MySQL · Power BI · Excel · Data Cleaning · Data Analysis · Data Visualization
-
-**GitHub:** [Lavan2411](https://github.com/Lavan2411)
-
-**Project Repository:** [E-Commerce SQL Analytics](https://github.com/Lavan2411/Ecommerce_SQL_Analytics)
+**Interests:** Data Analytics, SQL, Python, Power BI, and Business Intelligence
