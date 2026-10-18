@@ -507,15 +507,6 @@ Ecommerce_SQL_Analytics/
 │   ├── transformation.sql
 │   └── analytics.sql
 │
-├── docs/
-│   └── data_dictionary.md
-│
-├── tests/
-│   └── test_pipeline.py
-│
-├── powerbi/
-│   └── ecommerce_analytics.pbix
-│
 ├── .env
 ├── .gitignore
 └── README.md
