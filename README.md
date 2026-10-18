@@ -514,8 +514,6 @@ Ecommerce_SQL_Analytics/
 
 All project documentation, including the data dictionary and business insights, is maintained in this README.
 
-The project documentation and findings are maintained in this README. The `docs/data_dictionary.md` file may be retained for detailed reference, but it is not required to understand the main project workflow or findings.
-
 ---
 
 ## How to Run the Project
