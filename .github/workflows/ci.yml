@@ -12,6 +12,27 @@ jobs:
     name: Validate Project Files
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: test_password
+          MYSQL_DATABASE: ecommerce_analytics
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -ptest_password"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      MYSQL_HOST: 127.0.0.1
+      MYSQL_PORT: 3306
+      MYSQL_USER: root
+      MYSQL_PASSWORD: test_password
+      MYSQL_DATABASE: ecommerce_analytics
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,9 +42,18 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Check Python syntax
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+        
+      - name: Install MySQL client
         run: |
-          python -m py_compile src/api_client.py src/load_to_mysql.py
+          sudo apt-get update
+          sudo apt-get install -y mysql-client
+    
+
+
+      - name: Check Python syntax
+        run: python -m py_compile src/api_client.py src/load_to_mysql.py tests/test_sql_views.py
 
       - name: Check required project files
         run: |
@@ -34,6 +64,7 @@ jobs:
           test -f sql/transformation.sql
           test -f src/api_client.py
           test -f src/load_to_mysql.py
+          test -f tests/test_sql_views.py
 
       - name: Check SQL files for accidental Markdown fences
         run: |
@@ -43,3 +74,12 @@ jobs:
           else
             echo "SQL files contain no Markdown code fences."
           fi
+
+      - name: Create database schema
+        run: mysql -h 127.0.0.1 -P 3306 -u root -ptest_password < sql/schema.sql
+
+      - name: Create transformation views
+        run: mysql -h 127.0.0.1 -P 3306 -u root -ptest_password ecommerce_analytics < sql/transformation.sql
+
+      - name: Run SQL view tests
+        run: python -m unittest discover -s tests -p "test_*.py" -v
