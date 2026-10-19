@@ -1,4 +1,4 @@
-```sql
+
 USE ecommerce_analytics;
 
 
@@ -399,4 +399,4 @@ ORDER BY total_cart_value DESC;
 -- ============================================================
 -- END OF E-COMMERCE SQL ANALYTICS
 -- ============================================================
-```
+
