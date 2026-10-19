@@ -1,0 +1,45 @@
+name: E-commerce SQL Analytics CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate Project Files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check Python syntax
+        run: |
+          python -m py_compile src/api_client.py src/load_to_mysql.py
+
+      - name: Check required project files
+        run: |
+          test -f README.md
+          test -f sql/schema.sql
+          test -f sql/inspect.sql
+          test -f sql/analytics.sql
+          test -f sql/transformation.sql
+          test -f src/api_client.py
+          test -f src/load_to_mysql.py
+
+      - name: Check SQL files for accidental Markdown fences
+        run: |
+          if grep -nE '^[[:space:]]*```' sql/*.sql; then
+            echo "ERROR: Markdown code fences found in SQL files."
+            exit 1
+          else
+            echo "SQL files contain no Markdown code fences."
+          fi
